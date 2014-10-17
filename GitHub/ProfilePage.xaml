@@ -11,20 +11,140 @@
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait"  Orientation="Portrait"
-    shell:SystemTray.IsVisible="True">
+    shell:SystemTray.IsVisible="True"
+    ApplicationBar="{StaticResource GlobalAppBar}">
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <!--Pivot Control-->
-        <phone:Pivot Title="MY APPLICATION">
+        <phone:Pivot Title="{Binding Path=LocalizedResources.ApplicationTitle,
+            Source={StaticResource LocalizedStrings}}"
+                     SelectionChanged="Pivot_SelectionChanged">
             <!--Pivot item one-->
             <phone:PivotItem Header="Profile">
-                <Grid/>
+                <StackPanel>
+                    <Image Name="profilePic"
+                       Height="250"
+                       Width="250"
+                       Stretch="UniformToFill"
+                       Source="{Binding avatar_url}"/>
+                    <TextBlock Name="name"
+                           Text="{Binding name}"
+                           HorizontalAlignment="Center"
+                           FontSize="{StaticResource JumpListAlphabetFontSize}"/>
+                    <TextBlock Name="login"
+                           Text="{Binding login}"
+                           HorizontalAlignment="Center"/>
+                    <Rectangle Fill="{StaticResource PhoneSubtleBrush}"
+                           Height="1"
+                           Margin="40,0,40,0"/>
+                    <StackPanel Margin="12,0,0,0">
+                        <StackPanel Name="companyStackPanel" 
+                        Orientation="Horizontal"
+                                    Visibility="Collapsed">
+                            <Image Source="/Assets/company.png"
+                               Height="30"
+                               Width="30"
+                               Stretch="UniformToFill"/>
+                            <TextBlock Name="company"
+                                   Margin="10,0,0,0"
+                               />
+                        </StackPanel>
+                        <StackPanel Name="locationStackPanel" 
+                        Orientation="Horizontal"
+                                    Visibility="Collapsed">
+                            <Image Source="/Assets/location.png"
+                               Height="30"
+                               Width="30"
+                               Stretch="UniformToFill"/>
+                            <TextBlock Name="location"
+                                   Margin="10,0,0,0"
+                               />
+                        </StackPanel>
+                        <StackPanel Name="emailStackPanel" 
+                        Orientation="Horizontal"
+                                    Visibility="Collapsed">
+                            <Image Source="/Assets/email.png"
+                               Height="30"
+                               Width="30"
+                               Stretch="UniformToFill"/>
+                            <TextBlock Name="email"
+                                   Margin="10,0,0,0"
+                               />
+                        </StackPanel>
+                        <StackPanel Name="dateStackPanel" 
+                        Orientation="Horizontal"
+                                    Visibility="Collapsed">
+                            <Image Source="/Assets/date.png"
+                               Height="30"
+                               Width="30"
+                               Stretch="UniformToFill"/>
+                            <TextBlock Name="date"
+                                   Margin="10,0,0,0"
+                               />
+                        </StackPanel>
+                    </StackPanel>
+                    <Rectangle Fill="{StaticResource PhoneSubtleBrush}"
+                           Height="1"
+                           Margin="40,0,40,0"/>
+                </StackPanel>
             </phone:PivotItem>
 
             <!--Pivot item two-->
-            <phone:PivotItem Header="item2">
-                <Grid/>
+            <phone:PivotItem Header="repos">
+                <phone:LongListSelector
+                    Name="repoLongListSelector"
+                    Margin="12,0,0,0" SelectionChanged="repoLongListSelector_SelectionChanged"
+                    
+                    >
+                    <phone:LongListSelector.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal"
+                                        Margin="0,5,0,0">
+                                <Image Height="50"
+                                       Width="50"
+                                       Source="/Assets/repo.png"
+                                       />
+                                <StackPanel Margin="5,0,0,0">
+                                    <TextBlock Text="{Binding name}"/>
+                                    <TextBlock Text="{Binding language}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                    </phone:LongListSelector.ItemTemplate>
+                </phone:LongListSelector>
+            </phone:PivotItem>
+
+            <phone:PivotItem Header="following">
+                <phone:LongListSelector
+                    Name="followingLongListSelector"
+                    LayoutMode="Grid"
+                    GridCellSize="100,100"
+                    SelectionChanged="followersFollowing_SelectionChanged">
+                    <phone:LongListSelector.ItemTemplate>
+                        <DataTemplate>
+                            <Image 
+                                Source="{Binding avatar_url}"
+                                Margin="0,0,5,5"/>
+                        </DataTemplate>
+                    </phone:LongListSelector.ItemTemplate>
+                </phone:LongListSelector>
+            </phone:PivotItem>
+            
+            <phone:PivotItem Header="followers">
+                <phone:LongListSelector
+                    Name="followersLongListSelector"
+                    LayoutMode="Grid"
+                    GridCellSize="100,100" SelectionChanged="followersFollowing_SelectionChanged"
+                    >
+                    <phone:LongListSelector.ItemTemplate>
+                        <DataTemplate>
+                            <Image 
+                                Source="{Binding avatar_url}"
+                                Margin="0,0,5,5"/>
+                        </DataTemplate>
+                    </phone:LongListSelector.ItemTemplate>
+                </phone:LongListSelector>
             </phone:PivotItem>
         </phone:Pivot>
     </Grid>

@@ -65,6 +65,9 @@ namespace GitHub
         private void logout_Click(object sender, EventArgs e)
         {
             // perform logout operation
+            GitHubManager manager = GitHubManager.Instance;
+            manager.Logout();
+            (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri("/StartPage.xaml", UriKind.RelativeOrAbsolute));
         }
 
         // Code to execute when the application is launching (eg, from Start)

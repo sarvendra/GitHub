@@ -70,6 +70,9 @@ namespace GitHub
 
         void loginBrowser_Loaded(object sender, RoutedEventArgs e)
         {
+            // clear cache 
+            WebBrowserExtensions.ClearInternetCacheAsync(loginBrowser);
+
             string baseloginUri = "https://github.com/login/oauth/authorize?client_id={0}&scope=user,public_repo&redirect_uri={1}" +
                 "&state={2}";
             string loginUri = string.Format(baseloginUri, client_id, redirect_uri, state);
@@ -78,7 +81,7 @@ namespace GitHub
 
         protected override void OnBackKeyPress(CancelEventArgs e)
         {
-            Application.Current.Terminate();
+            this.NavigationService.Navigate(new Uri("/StartPage.xaml", UriKind.Relative));
         }
     }
 }

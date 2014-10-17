@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.IsolatedStorage;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,6 +13,11 @@ namespace GitHub
     {
         private string access_token = null;
         private const string accessTokenFilePath = "accessTokenFile.txt";
+        private const string baseSearchUri = "https://api.github.com/search/{0}";
+        private const string baseUserUri = "https://api.github.com/users/";
+        private const string baseRepoUri = "https://api.github.com/repos/{0}/{1}";
+        private const string baseBranchesUri = "https://api.github.com/repos/{0}/{1}/branches";
+        private const string baseBranchContentUri = "https://api.github.com/repos/{0}/{1}/contents?ref={2}";
 
         private static readonly GitHubManager instance = new GitHubManager();
 
@@ -81,8 +87,81 @@ namespace GitHub
                 if (storageFile.FileExists(accessTokenFilePath))
                 {
                     storageFile.DeleteFile(accessTokenFilePath);
+                    access_token = null;
                 }
             }
+        }
+
+        public async Task<string> getStringAsync(string uri)
+        {
+            HttpClient client = new HttpClient();
+            string response = await client.GetStringAsync(uri);
+            return response;
+            
+        }
+
+        public async Task<string> Search(string searchType, string arg)
+        {
+            string searchUri = baseSearchUri + "?q={1}";
+            searchUri = string.Format(searchUri, searchType, arg);
+            return await getStringAsync(searchUri);
+        }
+
+        public async Task<string> GetUserProfile(string loginName)
+        {
+            string userUri = baseUserUri + loginName;
+            return await getStringAsync(userUri);
+        }
+
+        public async Task<string> GetAsyncStringResponse(string uri)
+        {
+            return await getStringAsync(uri);
+        }
+
+        public async Task<string> GetRepo(string owner, string repo)
+        {
+            string repoUri = string.Format(baseRepoUri, owner, repo);
+            return await getStringAsync(repoUri);
+        }
+
+        public async Task<string> GetListofBranches(string owner, string repo)
+        {
+            string branchesUri = string.Format(baseBranchesUri, owner, repo);
+            return await getStringAsync(branchesUri);
+        }
+
+        public async Task<string> GetBranchContent(string owner, string repo, string branchname)
+        {
+            string branchUri = string.Format(baseBranchContentUri, owner, repo, branchname);
+            return await getStringAsync(branchUri);
+        }
+
+        public async Task<string> GetAuthenticatedUserProfile()
+        {
+            string uri = "https://api.github.com/user";
+            uri += "?access_token=" + access_token;
+            return await getStringAsync(uri);
+        }
+
+        public async Task<string> GetAuthenticatedUserFollowing()
+        {
+            string uri = "https://api.github.com/user/following";
+            uri += "?access_token=" + access_token;
+            return await getStringAsync(uri);
+        }
+
+        public async Task<string> GetAuthenticatedUserFollowers()
+        {
+            string uri = "https://api.github.com/user/followers";
+            uri += "?access_token=" + access_token;
+            return await getStringAsync(uri);
+        }
+
+        public async Task<string> GetAuthenticatedUserRepos()
+        {
+            string uri = "https://api.github.com/user/repos";
+            uri += "?access_token=" + access_token;
+            return await getStringAsync(uri);
         }
     }
 }
