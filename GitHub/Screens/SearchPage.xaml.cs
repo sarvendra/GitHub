@@ -5,6 +5,8 @@ using System.Net;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
+using GitHub.Model;
+using GitHub.Utility;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using System.Windows.Input;
@@ -30,7 +32,7 @@ namespace GitHub
                 if (response != null)
                 {
                     Repos repos = JsonConvert.DeserializeObject<Repos>(response);
-                    RepoList.ItemsSource = repos.Items;
+                    this.repoListUserControl.repoLongListSelector.ItemsSource = repos.Items;
                 }
             }
         }
@@ -59,28 +61,12 @@ namespace GitHub
             User user = selector.SelectedItem as User; 
             if (user == null)
                 return;
-            string uri = "/UserPage.xaml?name=" + user.login;
+            string uri = PageLocator.USER_PAGE+"?name=" + user.login;
             NavigationService.Navigate(new Uri(uri, UriKind.Relative));
 
             // clear list and text box
             UserSearchTextBox.Text = string.Empty;
             UserList.ItemsSource = null;
-        }
-
-        private void RepoList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            LongListSelector selector = sender as LongListSelector;
-            if (selector == null)
-                return;
-            Repo repo = selector.SelectedItem as Repo;
-            if (repo == null)
-                return;
-            string uri = "/RepoPage.xaml?reponame=" + repo.name + "&ownername=" + repo.owner.login;
-            NavigationService.Navigate(new Uri(uri, UriKind.Relative));
-
-            // clear list and text box
-            RepoSearchTextBox.Text = string.Empty;
-            RepoList.ItemsSource = null;
         }
     }
 }

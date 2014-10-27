@@ -1,0 +1,102 @@
+﻿<UserControl x:Class="GitHub.Screens.RepoDetailsUserControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    d:DesignHeight="480" d:DesignWidth="480">
+    
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <StackPanel>
+            <TextBlock Name="descriptionTextBlock"
+                               Text="{Binding description}"
+                               TextWrapping="Wrap"
+                               />
+            <Grid>
+                <TextBlock Text="Watchers"
+                                   HorizontalAlignment="Left"
+                                   FontSize="{StaticResource JumpListAlphabetFontSize}"
+                                   />
+                <TextBlock Name="watchersTextBlock"
+                                   HorizontalAlignment="Right"
+                                   FontSize="{StaticResource JumpListAlphabetFontSize}"
+                                   Text="{Binding watchers}"
+                                   Margin="0,0,10,0"
+                                   />
+            </Grid>
+
+            <Grid>
+                <TextBlock Text="Forks"
+                                   HorizontalAlignment="Left"
+                                   FontSize="{StaticResource JumpListAlphabetFontSize}"
+                                   />
+                <TextBlock Name="forksTextBlock"
+                                   HorizontalAlignment="Right"
+                                   FontSize="{StaticResource JumpListAlphabetFontSize}"
+                                   Text="{Binding forks}"
+                                   Margin="0,0,10,0"
+                                   />
+            </Grid>
+
+            <Grid>
+                <TextBlock Text="Issues"
+                                   HorizontalAlignment="Left"
+                                   FontSize="{StaticResource JumpListAlphabetFontSize}"
+                                   />
+                <TextBlock Name="issuesTextBlock"
+                                   HorizontalAlignment="Right"
+                                   FontSize="{StaticResource JumpListAlphabetFontSize}"
+                                   Text="{Binding open_issues}"
+                                   Margin="0,0,10,0"
+                                   />
+            </Grid>
+
+            <Grid Name="OwnerGrid">
+                <TextBlock Text="Owner"
+                                   HorizontalAlignment="Left"
+                                   FontSize="{StaticResource JumpListAlphabetFontSize}"
+                                   />
+                <Button Name="ownerButton"
+                                Click="ownerButton_Click"
+                                HorizontalAlignment="Right" 
+                                BorderBrush="{StaticResource PhoneBackgroundBrush}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Name="OwnerImage"
+                                       Stretch="UniformToFill"
+                                       />
+                        <TextBlock Name="OwnerTextBlock"
+                                           VerticalAlignment="Center"
+                                           />
+                    </StackPanel>
+                </Button>
+            </Grid>
+            <TextBlock Text="Branches"/>
+            <toolkit:ListPicker x:Name="branchListPicker" 
+                                        SelectionChanged="branchListPicker_OnSelectionChanged" 
+                                        MouseEnter="branchListPicker_MouseEnter"
+                                        >
+                <toolkit:ListPicker.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding name}"/>
+                    </DataTemplate>
+                </toolkit:ListPicker.ItemTemplate>
+                <toolkit:ListPicker.FullModeItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding name}"/>
+                    </DataTemplate>
+                </toolkit:ListPicker.FullModeItemTemplate>
+            </toolkit:ListPicker>
+            <TextBlock Text="Download"
+                               FontSize="{StaticResource JumpListAlphabetFontSize}"
+                               />
+            <Button Name="downloadButton"
+                            Content="Get a Zip"
+                            Click="downloadButton_Click"
+                            />
+        </StackPanel>
+    </Grid>
+</UserControl>

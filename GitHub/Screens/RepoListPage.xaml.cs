@@ -5,6 +5,8 @@ using System.Net;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
+using GitHub.Model;
+using GitHub.Utility;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Newtonsoft.Json;
@@ -30,25 +32,13 @@ namespace GitHub
             List<Repo> repoList = JsonConvert.DeserializeObject<List<Repo>>(response);
             if (repoList == null)
                 return;
-            repoLongListSelector.ItemsSource = repoList;
+            this.repoListUserControl.repoLongListSelector.ItemsSource = repoList;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             repoUrl = NavigationContext.QueryString["repo"];
-        }
-
-        private void repoLongListSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            LongListSelector selector = sender as LongListSelector;
-            if (selector == null)
-                return;
-            Repo repo = selector.SelectedItem as Repo;
-            if (repo == null)
-                return;
-            string uri = "/RepoPage.xaml?reponame=" + repo.name + "&ownername=" + repo.owner.login;
-            NavigationService.Navigate(new Uri(uri, UriKind.Relative));
         }
     }
 }

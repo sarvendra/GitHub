@@ -1,21 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 
-namespace GitHub
+namespace GitHub.Utility
 {
-    public class DateTimeToDateConverter : IValueConverter
+    public class FormatDateConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value != null)
             {
                 string date = value as string;
-                return date.Split('T')[0];
+                string formattedDate = date.Split('T')[0];
+                formattedDate += " " + date.Split('T')[1].Split('Z')[0];
+                return formattedDate;
             }
             return null;
         }

@@ -1,28 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 
-namespace GitHub
+namespace GitHub.Utility
 {
-    public class DisplayDateConverter : IValueConverter
+    public class DateTimeToDateConverter : IValueConverter
     {
-        private string prevDate = null;
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value != null)
             {
                 string date = value as string;
-                date = date.Split('T')[0];
-                if (date != prevDate)
-                {
-                    prevDate = date;
-                    return "Visible";
-                }
-                return "Collapsed";
+                return date.Split('T')[0];
             }
             return null;
         }

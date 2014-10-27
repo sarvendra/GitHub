@@ -1,0 +1,28 @@
+﻿<UserControl x:Class="GitHub.Screens.UserGridViewUserControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    d:DesignHeight="480" d:DesignWidth="480">
+    
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <phone:LongListSelector
+                    Name="userLongListSelector"
+                    LayoutMode="Grid"
+                    GridCellSize="100,100"
+                    SelectionChanged="UserLongListSelector_OnSelectionChanged">
+            <phone:LongListSelector.ItemTemplate>
+                <DataTemplate>
+                    <Image 
+                                Source="{Binding avatar_url}"
+                                Margin="0,0,5,5"/>
+                </DataTemplate>
+            </phone:LongListSelector.ItemTemplate>
+        </phone:LongListSelector>
+    </Grid>
+</UserControl>

@@ -7,6 +7,7 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using GitHub.Resources;
+using GitHub.Utility;
 
 namespace GitHub
 {
@@ -67,7 +68,7 @@ namespace GitHub
             // perform logout operation
             GitHubManager manager = GitHubManager.Instance;
             manager.Logout();
-            (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri("/StartPage.xaml", UriKind.RelativeOrAbsolute));
+            (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri(PageLocator.START_PAGE, UriKind.RelativeOrAbsolute));
         }
 
         // Code to execute when the application is launching (eg, from Start)

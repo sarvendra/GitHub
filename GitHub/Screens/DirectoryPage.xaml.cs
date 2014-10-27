@@ -5,6 +5,8 @@ using System.Net;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
+using GitHub.Model;
+using GitHub.Utility;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Newtonsoft.Json;
@@ -30,31 +32,13 @@ namespace GitHub
             if (branches == null)
                 return;
             List<BranchContent> SortedList = branches.OrderBy(o => o.type).ToList();
-            longListSelector.ItemsSource = SortedList;
+            this.treeUserControl.treeLongListSelector.ItemsSource = SortedList;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             branchUri = NavigationContext.QueryString["uri"];
-        }
-
-        private void longListSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            LongListSelector selector = sender as LongListSelector;
-            if (selector == null)
-                return;
-            BranchContent branchcontent = selector.SelectedItem as BranchContent;
-            if (branchcontent == null)
-                return;
-            if (branchcontent.type == "dir")
-            {
-                string uri = branchcontent.url;
-                // navigate to direcotry explorer page
-                this.NavigationService.Navigate(new Uri("/DirectoryPage.xaml?uri=" + uri, UriKind.Relative));
-            }
-
-            selector.SelectedItem = null;
         }
     }
 }

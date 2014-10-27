@@ -90,38 +90,59 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="About.xaml.cs">
+    <Compile Include="Model\Branch.cs" />
+    <Compile Include="Model\Repo.cs" />
+    <Compile Include="Model\User.cs" />
+    <Compile Include="Screens\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CommitClasses.cs" />
-    <Compile Include="DateTimeToDateConverter.cs" />
-    <Compile Include="DirectoryPage.xaml.cs">
+    <Compile Include="Model\Commit.cs" />
+    <Compile Include="Screens\CommitUserControl.xaml.cs">
+      <DependentUpon>CommitUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\ProfileUserControl.xaml.cs">
+      <DependentUpon>ProfileUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\RepoDetailsUserControl.xaml.cs">
+      <DependentUpon>RepoDetailsUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\RepoListUserControl.xaml.cs">
+      <DependentUpon>RepoListUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\TreeUserControl.xaml.cs">
+      <DependentUpon>TreeUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\UserGridViewUserControl.xaml.cs">
+      <DependentUpon>UserGridViewUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Utility\DateTimeToDateConverter.cs" />
+    <Compile Include="Screens\DirectoryPage.xaml.cs">
       <DependentUpon>DirectoryPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DirFileTypeConverter.cs" />
-    <Compile Include="DisplayDateConverter.cs" />
-    <Compile Include="FollowersFollowingPage.xaml.cs">
+    <Compile Include="Utility\DirFileTypeConverter.cs" />
+    <Compile Include="Utility\DisplayDateConverter.cs" />
+    <Compile Include="Screens\FollowersFollowingPage.xaml.cs">
       <DependentUpon>FollowersFollowingPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FormatDateConverter.cs" />
+    <Compile Include="Utility\FormatDateConverter.cs" />
     <Compile Include="GitHubManager.cs" />
     <Compile Include="LocalizedStrings.cs" />
-    <Compile Include="LoginPage.xaml.cs">
+    <Compile Include="Screens\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ProfilePage.xaml.cs">
+    <Compile Include="Screens\ProfilePage.xaml.cs">
       <DependentUpon>ProfilePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="RepoListPage.xaml.cs">
+    <Compile Include="Screens\RepoListPage.xaml.cs">
       <DependentUpon>RepoListPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="RepoPage.xaml.cs">
+    <Compile Include="Screens\RepoPage.xaml.cs">
       <DependentUpon>RepoPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SearchPage.xaml.cs">
+    <Compile Include="Screens\SearchPage.xaml.cs">
       <DependentUpon>SearchPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="SplashScreen.xaml.cs">
@@ -133,48 +154,73 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="StartPage.xaml.cs">
+    <Compile Include="Screens\StartPage.xaml.cs">
       <DependentUpon>StartPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GitHubClasses.cs" />
-    <Compile Include="UserPage.xaml.cs">
+    <Compile Include="Screens\UserPage.xaml.cs">
       <DependentUpon>UserPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utility\PageLocator.cs" />
+    <Compile Include="ViewModels\ViewModelBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
-    <Page Include="About.xaml">
+    <Page Include="Screens\About.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="DirectoryPage.xaml">
+    <Page Include="Screens\CommitUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="FollowersFollowingPage.xaml">
+    <Page Include="Screens\DirectoryPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="LoginPage.xaml">
+    <Page Include="Screens\FollowersFollowingPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ProfilePage.xaml">
+    <Page Include="Screens\LoginPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="RepoListPage.xaml">
+    <Page Include="Screens\ProfilePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="RepoPage.xaml">
+    <Page Include="Screens\ProfileUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SearchPage.xaml">
+    <Page Include="Screens\RepoDetailsUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Screens\RepoListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Screens\RepoListUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Screens\RepoPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Screens\SearchPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Screens\TreeUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Screens\UserGridViewUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -182,11 +228,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="StartPage.xaml">
+    <Page Include="Screens\StartPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserPage.xaml">
+    <Page Include="Screens\UserPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -257,6 +303,7 @@
       <HintPath>..\packages\Microsoft.Net.Http.2.2.28\lib\sl4-windowsphone71\System.Net.Http.Primitives.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

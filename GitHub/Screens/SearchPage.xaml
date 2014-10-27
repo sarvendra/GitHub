@@ -6,6 +6,7 @@
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:screens="clr-namespace:GitHub.Screens"
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -23,14 +24,7 @@
                 <StackPanel>
                     <TextBox x:Name="RepoSearchTextBox" KeyDown="RepoSearchTextBox_KeyDown"/>
                     <Grid>
-                        <phone:LongListSelector x:Name="RepoList"
-                                                SelectionChanged="RepoList_SelectionChanged">
-                            <phone:LongListSelector.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding full_name}"/>
-                                </DataTemplate>
-                            </phone:LongListSelector.ItemTemplate>
-                        </phone:LongListSelector>
+                        <screens:RepoListUserControl x:Name="repoListUserControl"/>
                     </Grid>
                 </StackPanel>
             </phone:PivotItem>

@@ -11,9 +11,10 @@ namespace GitHub
 {
     public sealed class GitHubManager
     {
+        private const string GIT_BASE_URL = "https://api.github.com/";
         private string access_token = null;
         private const string accessTokenFilePath = "accessTokenFile.txt";
-        private const string baseSearchUri = "https://api.github.com/search/{0}";
+        private const string baseSearchUri = GIT_BASE_URL+ "search/{0}";
         private const string baseUserUri = "https://api.github.com/users/";
         private const string baseRepoUri = "https://api.github.com/repos/{0}/{1}";
         private const string baseBranchesUri = "https://api.github.com/repos/{0}/{1}/branches";

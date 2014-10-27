@@ -5,6 +5,8 @@ using System.Net;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
+using GitHub.Model;
+using GitHub.Utility;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Newtonsoft.Json;
@@ -53,7 +55,7 @@ namespace GitHub
             User user = selector.SelectedItem as User;
             if (user == null)
                 return;
-            string navigationUri = "/UserPage.xaml?name=" + user.login;
+            string navigationUri = PageLocator.USER_PAGE+"?name=" + user.login;
             NavigationService.Navigate(new Uri(navigationUri, UriKind.Relative));
         }
     }

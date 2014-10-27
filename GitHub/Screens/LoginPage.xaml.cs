@@ -5,6 +5,7 @@ using System.Net;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
+using GitHub.Utility;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using System.Net.Http;
@@ -57,7 +58,7 @@ namespace GitHub
                     string accessToken = responseString.Split('&')[0].Split('=')[1];
                     GitHubManager manager = GitHubManager.Instance;
                     manager.Login(accessToken);
-                    this.NavigationService.Navigate(new Uri("/ProfilePage.xaml", UriKind.Relative));
+                    this.NavigationService.Navigate(new Uri(PageLocator.PROFILE_PAGE, UriKind.Relative));
 
                 }
                 catch(Exception ex)
@@ -81,7 +82,7 @@ namespace GitHub
 
         protected override void OnBackKeyPress(CancelEventArgs e)
         {
-            this.NavigationService.Navigate(new Uri("/StartPage.xaml", UriKind.Relative));
+            this.NavigationService.Navigate(new Uri(PageLocator.START_PAGE, UriKind.Relative));
         }
     }
 }

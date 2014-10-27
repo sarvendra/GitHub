@@ -8,6 +8,7 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using System.Threading;
+using GitHub.Utility;
 
 namespace GitHub
 {
@@ -25,14 +26,14 @@ namespace GitHub
             GitHubManager manager = GitHubManager.Instance;
             if (manager.IsLoggedIn())
             {
-                this.NavigationService.Navigate(new Uri("/ProfilePage.xaml", UriKind.Relative));
+                this.NavigationService.Navigate(new Uri(PageLocator.PROFILE_PAGE, UriKind.Relative));
 
                 // enable logout menu item
                 //((ApplicationBarMenuItem)ApplicationBar.MenuItems[0]).IsEnabled = true;
             }
             else
             {
-                this.NavigationService.Navigate(new Uri("/StartPage.xaml", UriKind.Relative));
+                this.NavigationService.Navigate(new Uri(PageLocator.START_PAGE, UriKind.Relative));
 
                 // disable logout menu item
                 //((ApplicationBarMenuItem)(ApplicationBar as ApplicationBar).MenuItems[1]).IsEnabled = false;

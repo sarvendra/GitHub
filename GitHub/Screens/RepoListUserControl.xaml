@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="GitHub.Screens.RepoListUserControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    d:DesignHeight="480" d:DesignWidth="480">
+    
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <phone:LongListSelector
+                    Name="repoLongListSelector"
+                    Margin="12,0,0,0" SelectionChanged="repoLongListSelector_SelectionChanged"
+                    >
+            <phone:LongListSelector.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal"
+                                        Margin="0,5,0,0">
+                        <Image Height="50"
+                                       Width="50"
+                                       Source="/Assets/repo.png"
+                                       />
+                        <StackPanel Margin="5,0,0,0">
+                            <TextBlock Text="{Binding full_name}"/>
+                            <TextBlock Text="{Binding language}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </phone:LongListSelector.ItemTemplate>
+        </phone:LongListSelector>
+    </Grid>
+</UserControl>

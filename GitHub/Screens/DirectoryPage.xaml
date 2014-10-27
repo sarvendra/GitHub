@@ -12,12 +12,13 @@
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d"
     shell:SystemTray.IsVisible="True"
-    xmlns:conv="clr-namespace:GitHub"
+    xmlns:utility="clr-namespace:GitHub.Utility"
+    xmlns:screens="clr-namespace:GitHub.Screens"
     >
     
     <phone:PhoneApplicationPage.Resources>
-        <conv:DirFileTypeConverter x:Key="dirFileTypeConverter">
-        </conv:DirFileTypeConverter>
+        <utility:DirFileTypeConverter x:Key="dirFileTypeConverter">
+        </utility:DirFileTypeConverter>
     </phone:PhoneApplicationPage.Resources>
 
     <!--LayoutRoot is the root grid where all page content is placed-->
@@ -36,22 +37,7 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <phone:LongListSelector Name="longListSelector"
-                                    SelectionChanged="longListSelector_SelectionChanged">
-                <phone:LongListSelector.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <Image 
-                                    Height="30"
-                                    Width="30"
-                                    Source="{Binding type,
-                                    Converter={StaticResource dirFileTypeConverter}}"
-                                    />
-                            <TextBlock Text="{Binding name}"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </phone:LongListSelector.ItemTemplate>
-            </phone:LongListSelector>
+            <screens:TreeUserControl x:Name="treeUserControl"/>
         </Grid>
     </Grid>
 
