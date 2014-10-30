@@ -63,10 +63,12 @@ namespace GitHub
                         throw new System.ArgumentException("State do not match."); 
                     }
 
+                    SystemTray.ProgressIndicator = new ProgressIndicator();
+                    SystemTray.ProgressIndicator.Text = "loading";
+                    setProgressIndicator(true);
                     await this.loginViewModel.GetAccessToken(code);
-
+                    setProgressIndicator(false);
                     this.NavigationService.Navigate(new Uri(PageLocator.PROFILE_PAGE, UriKind.Relative));
-
                 }
                 catch(Exception ex)
                 {
@@ -74,6 +76,12 @@ namespace GitHub
                     this.NavigationService.GoBack();
                 }
             }
+        }
+
+        private void setProgressIndicator(bool isVisible)
+        {
+            SystemTray.ProgressIndicator.IsIndeterminate = isVisible;
+            SystemTray.ProgressIndicator.IsVisible = isVisible;
         }
 
         void loginBrowser_Loaded(object sender, RoutedEventArgs e)

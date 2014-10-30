@@ -51,19 +51,34 @@ namespace GitHub
         {
             if (e.Key == Key.Enter)
             {
+                SystemTray.ProgressIndicator = new ProgressIndicator();
+                SystemTray.ProgressIndicator.Text = "loading";
+                setProgressIndicator(true);
+
                 // call repo search api
                 string repo = RepoSearchTextBox.Text;
                 await this.searchViewModel.GetRepos(repo);
+                setProgressIndicator(false);
             }
+        }
+
+        private void setProgressIndicator(bool isVisible)
+        {
+            SystemTray.ProgressIndicator.IsIndeterminate = isVisible;
+            SystemTray.ProgressIndicator.IsVisible = isVisible;
         }
 
         private async void UserSearchTextBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
+                SystemTray.ProgressIndicator = new ProgressIndicator();
+                SystemTray.ProgressIndicator.Text = "loading";
+                setProgressIndicator(true);
                 // call user search api
                 string user = UserSearchTextBox.Text;
                 await this.searchViewModel.GetUsers(user);
+                setProgressIndicator(false);
             }
         }
     }

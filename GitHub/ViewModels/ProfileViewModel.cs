@@ -239,6 +239,7 @@ namespace GitHub.ViewModels
                 }
 
                 List<Repo> repos = jsonDeserializer.DeserializeRepoList(response);
+                repoItems.Clear();
                 foreach (var repo in repos)
                 {
                     repoItems.Add(repo);

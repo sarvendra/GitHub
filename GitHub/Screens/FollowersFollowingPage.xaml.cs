@@ -58,7 +58,17 @@ namespace GitHub
 
         async void FollowersFollowingPage_Loaded(object sender, RoutedEventArgs e)
         {
+            SystemTray.ProgressIndicator = new ProgressIndicator();
+            SystemTray.ProgressIndicator.Text = "loading";
+            setProgressIndicator(true);
             await this.followersFollowingViewModel.GetUsersAsync(url);
+            setProgressIndicator(false);
+        }
+
+        private void setProgressIndicator(bool isVisible)
+        {
+            SystemTray.ProgressIndicator.IsIndeterminate = isVisible;
+            SystemTray.ProgressIndicator.IsVisible = isVisible;
         }
     }
 }

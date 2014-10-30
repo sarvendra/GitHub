@@ -46,8 +46,11 @@ namespace GitHub
                 _isListPickerSelected = false;
                 return;
             }
-
+            SystemTray.ProgressIndicator = new ProgressIndicator();
+            SystemTray.ProgressIndicator.Text = "loading";
+            setProgressIndicator(true);
             await repoViewModel.GetRepoDetails(_owner, _reponame);
+            setProgressIndicator(false);
 
             ApplicationBarMenuItem logoutMenuItem = (ApplicationBarMenuItem)ApplicationBar.MenuItems[1];
             if (!repoViewModel.IsLoggedIn())
@@ -123,17 +126,35 @@ namespace GitHub
 
         async private void DisplayCollaborators()
         {
+            SystemTray.ProgressIndicator = new ProgressIndicator();
+            SystemTray.ProgressIndicator.Text = "loading";
+            setProgressIndicator(true);
             await repoViewModel.GetCollaborators();
+            setProgressIndicator(false);
+        }
+
+        private void setProgressIndicator(bool isVisible)
+        {
+            SystemTray.ProgressIndicator.IsIndeterminate = isVisible;
+            SystemTray.ProgressIndicator.IsVisible = isVisible;
         }
 
         async private void DisplayCommits()
         {
+            SystemTray.ProgressIndicator = new ProgressIndicator();
+            SystemTray.ProgressIndicator.Text = "loading";
+            setProgressIndicator(true);
             await repoViewModel.GetCommits();
+            setProgressIndicator(false);
         }
     
         private async void DisplayTree()
         {
+            SystemTray.ProgressIndicator = new ProgressIndicator();
+            SystemTray.ProgressIndicator.Text = "loading";
+            setProgressIndicator(true);
             await this.repoViewModel.GetBranchContents();
+            setProgressIndicator(false);
         }
 
         private void ownerButton_Click(object sender, EventArgs e)

@@ -51,7 +51,17 @@ namespace GitHub
 
         async void RepoList_Loaded(object sender, RoutedEventArgs e)
         {
+            SystemTray.ProgressIndicator = new ProgressIndicator();
+            SystemTray.ProgressIndicator.Text = "loading";
+            setProgressIndicator(true);
             await this.repoListViewModel.GetRepos(repoUrl);
+            setProgressIndicator(false);
+        }
+
+        private void setProgressIndicator(bool isVisible)
+        {
+            SystemTray.ProgressIndicator.IsIndeterminate = isVisible;
+            SystemTray.ProgressIndicator.IsVisible = isVisible;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

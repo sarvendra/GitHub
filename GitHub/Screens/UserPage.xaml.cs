@@ -51,7 +51,11 @@ namespace GitHub
 
         async void UserPage_Loaded(object sender, RoutedEventArgs e)
         {
+            SystemTray.ProgressIndicator = new ProgressIndicator();
+            SystemTray.ProgressIndicator.Text = "loading";
+            setProgressIndicator(true);
             await this.userViewModel.GetUserProfile(loginName);
+            setProgressIndicator(false);
 
             // followers
             followersHyperLink.Content = this.userViewModel.NoOfFollowers + " followers";
@@ -59,6 +63,12 @@ namespace GitHub
             followingHyperLink.Content = this.userViewModel.NoOfFollowing + " following";
             // repos
             reposHyperLink.Content = this.userViewModel.NoOfRepos + " repos";
+        }
+
+        private void setProgressIndicator(bool isVisible)
+        {
+            SystemTray.ProgressIndicator.IsIndeterminate = isVisible;
+            SystemTray.ProgressIndicator.IsVisible = isVisible;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

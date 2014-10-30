@@ -59,7 +59,17 @@ namespace GitHub
 
         async void ProfilePage_Loaded(object sender, RoutedEventArgs e)
         {
+            SystemTray.ProgressIndicator = new ProgressIndicator();
+            SystemTray.ProgressIndicator.Text = "loading";
+            setProgressIndicator(true);
             await this.profileViewModel.GetAuthenticatedUserProfile();
+            setProgressIndicator(false);
+        }
+
+        private void setProgressIndicator(bool isVisible)
+        {
+            SystemTray.ProgressIndicator.IsIndeterminate = isVisible;
+            SystemTray.ProgressIndicator.IsVisible = isVisible;
         }
 
         protected override void OnBackKeyPress(CancelEventArgs e)
@@ -95,17 +105,29 @@ namespace GitHub
 
         async private void DisplayRepos()
         {
+            SystemTray.ProgressIndicator = new ProgressIndicator();
+            SystemTray.ProgressIndicator.Text = "loading";
+            setProgressIndicator(true);
             await this.profileViewModel.GetRepos();
+            setProgressIndicator(false);
         }
 
         async private void DisplayFollowing()
         {
+            SystemTray.ProgressIndicator = new ProgressIndicator();
+            SystemTray.ProgressIndicator.Text = "loading";
+            setProgressIndicator(true);
             await this.profileViewModel.GetFollowing();
+            setProgressIndicator(false);
         }
 
         async private void DisplayFollowers()
         {
+            SystemTray.ProgressIndicator = new ProgressIndicator();
+            SystemTray.ProgressIndicator.Text = "loading";
+            setProgressIndicator(true);
             await this.profileViewModel.GetFollowers();
+            setProgressIndicator(false);
         }
     }
 }
