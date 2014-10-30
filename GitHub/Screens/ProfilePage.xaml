@@ -33,21 +33,18 @@
             <!--Pivot item two-->
             <phone:PivotItem Header="repos">
                 <screens:RepoListUserControl 
-                    x:Name="repoListUserControl"
                     DataContext="{Binding}"
                     />
             </phone:PivotItem>
 
             <phone:PivotItem Header="following">
                 <screens:UserGridViewUserControl
-                    x:Name="followingGridUserControl"
                     DataContext="{Binding}"
                     />
             </phone:PivotItem>
             
             <phone:PivotItem Header="followers">
                 <screens:UserGridViewUserControl 
-                    x:Name="followersGridUserControl"
                     DataContext="{Binding}"
                     />
             </phone:PivotItem>

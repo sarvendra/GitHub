@@ -24,34 +24,44 @@
             Source={StaticResource LocalizedStrings}}">
             <!--Pivot item one-->
             <phone:PivotItem x:Name="RepoPivotItem" Header="Repo">
-                <StackPanel>
-                    <TextBox x:Name="RepoSearchTextBox" KeyDown="RepoSearchTextBox_KeyDown"/>
-                    <Grid>
-                        <screens:RepoListUserControl x:Name="repoListUserControl"/>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBox x:Name="RepoSearchTextBox" 
+                             Grid.Row="0"
+                             KeyDown="RepoSearchTextBox_KeyDown"/>
                         <screens:RepoListUserControl
+                            Grid.Row="1"
                             DataContext="{Binding}"
                             />
-                    </Grid>
-                </StackPanel>
+                </Grid>
             </phone:PivotItem>
 
             <!--Pivot item two-->
             <phone:PivotItem x:Name="UserPivotItem" Header="User">
-                <StackPanel>
-                    <TextBox x:Name="UserSearchTextBox" KeyDown="UserSearchTextBox_KeyDown"/>
-                    <Grid>
-                        <utility:LongListSelector x:Name="UserList" 
-                                                ItemsSource="{Binding UserItems}"
-                                                SelectedItem="{Binding SelectedUser, Mode=TwoWay}"
-                                                >
-                            <utility:LongListSelector.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding login}"/>
-                                </DataTemplate>
-                            </utility:LongListSelector.ItemTemplate>
-                        </utility:LongListSelector>
-                    </Grid>
-                </StackPanel>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>                    
+                    <TextBox x:Name="UserSearchTextBox" 
+                             Grid.Row="0"
+                             KeyDown="UserSearchTextBox_KeyDown"/>
+
+                    <utility:LongListSelector x:Name="UserList"
+                                              Grid.Row="1"
+                                              ItemsSource="{Binding UserItems}"
+                                              SelectedItem="{Binding SelectedUser, Mode=TwoWay}"
+                                              >
+                        <utility:LongListSelector.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding login}"/>
+                            </DataTemplate>
+                        </utility:LongListSelector.ItemTemplate>
+                    </utility:LongListSelector>
+                </Grid>
             </phone:PivotItem>
         </phone:Pivot>
     </Grid>

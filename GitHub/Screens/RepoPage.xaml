@@ -27,27 +27,26 @@
             <!--Pivot item one-->
             <phone:PivotItem Header="details">
                 <screens:RepoDetailsUserControl
-                    x:Name="repoDetailsUserControl" DataContext="{Binding}"
+                    Name="repoDetailsUserControl"
+                    DataContext="{Binding}"
                     />
             </phone:PivotItem>
 
             <!--Pivot item two-->
             <phone:PivotItem Header="tree">
                 <screens:TreeUserControl 
-                    x:Name="TreeUserControl"
                     DataContext="{Binding}"
                     />
             </phone:PivotItem>
 
             <phone:PivotItem Header="commits">
-                <screens:CommitUserControl x:Name="commitUserControl"
+                <screens:CommitUserControl 
                 DataContext="{Binding}"
                 />
             </phone:PivotItem>
 
             <phone:PivotItem Header="collaborators">
                 <screens:UserGridViewUserControl 
-                    x:Name="collaboratorsUserGridUserControl"
                     DataContext="{Binding}"
                     />
             </phone:PivotItem>
