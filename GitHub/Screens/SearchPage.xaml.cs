@@ -51,14 +51,21 @@ namespace GitHub
         {
             if (e.Key == Key.Enter)
             {
-                SystemTray.ProgressIndicator = new ProgressIndicator();
-                SystemTray.ProgressIndicator.Text = "loading";
-                setProgressIndicator(true);
+                try
+                {
+                    SystemTray.ProgressIndicator = new ProgressIndicator();
+                    SystemTray.ProgressIndicator.Text = "loading";
+                    setProgressIndicator(true);
 
-                // call repo search api
-                string repo = RepoSearchTextBox.Text;
-                await this.searchViewModel.GetRepos(repo);
-                setProgressIndicator(false);
+                    // call repo search api
+                    string repo = RepoSearchTextBox.Text;
+                    await this.searchViewModel.GetRepos(repo);
+                    setProgressIndicator(false);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);                    
+                }
             }
         }
 
@@ -72,13 +79,20 @@ namespace GitHub
         {
             if (e.Key == Key.Enter)
             {
-                SystemTray.ProgressIndicator = new ProgressIndicator();
-                SystemTray.ProgressIndicator.Text = "loading";
-                setProgressIndicator(true);
-                // call user search api
-                string user = UserSearchTextBox.Text;
-                await this.searchViewModel.GetUsers(user);
-                setProgressIndicator(false);
+                try
+                {
+                    SystemTray.ProgressIndicator = new ProgressIndicator();
+                    SystemTray.ProgressIndicator.Text = "loading";
+                    setProgressIndicator(true);
+                    // call user search api
+                    string user = UserSearchTextBox.Text;
+                    await this.searchViewModel.GetUsers(user);
+                    setProgressIndicator(false);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
         }
     }

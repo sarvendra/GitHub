@@ -83,5 +83,11 @@ namespace GitHub.ViewModels
                 }
             }
         }
+
+        public bool IsLoggedIn()
+        {
+            manager = GitHubManager.Instance;
+            return manager.IsLoggedIn();
+        }
     }
 }

@@ -153,5 +153,11 @@ namespace GitHub.ViewModels
             Email = user.email;
             Date = user.created_at;
         }
+
+        public bool IsLoggedIn()
+        {
+            manager = GitHubManager.Instance;
+            return manager.IsLoggedIn();
+        }
     }
 }

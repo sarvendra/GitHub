@@ -51,19 +51,33 @@ namespace GitHub
 
         private void logout_Click(object sender, EventArgs e)
         {
-            // perform logout operation
-            GitHubManager manager = GitHubManager.Instance;
-            manager.Logout();
-            NavigationService.Navigate(new Uri(PageLocator.START_PAGE, UriKind.RelativeOrAbsolute));
+            try
+            {
+                // perform logout operation
+                GitHubManager manager = GitHubManager.Instance;
+                manager.Logout();
+                NavigationService.Navigate(new Uri(PageLocator.START_PAGE, UriKind.RelativeOrAbsolute));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         async void ProfilePage_Loaded(object sender, RoutedEventArgs e)
         {
-            SystemTray.ProgressIndicator = new ProgressIndicator();
-            SystemTray.ProgressIndicator.Text = "loading";
-            setProgressIndicator(true);
-            await this.profileViewModel.GetAuthenticatedUserProfile();
-            setProgressIndicator(false);
+            try
+            {
+                SystemTray.ProgressIndicator = new ProgressIndicator();
+                SystemTray.ProgressIndicator.Text = "loading";
+                setProgressIndicator(true);
+                await this.profileViewModel.GetAuthenticatedUserProfile();
+                setProgressIndicator(false);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void setProgressIndicator(bool isVisible)
@@ -105,29 +119,50 @@ namespace GitHub
 
         async private void DisplayRepos()
         {
-            SystemTray.ProgressIndicator = new ProgressIndicator();
-            SystemTray.ProgressIndicator.Text = "loading";
-            setProgressIndicator(true);
-            await this.profileViewModel.GetRepos();
-            setProgressIndicator(false);
+            try
+            {
+                SystemTray.ProgressIndicator = new ProgressIndicator();
+                SystemTray.ProgressIndicator.Text = "loading";
+                setProgressIndicator(true);
+                await this.profileViewModel.GetRepos();
+                setProgressIndicator(false);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         async private void DisplayFollowing()
         {
-            SystemTray.ProgressIndicator = new ProgressIndicator();
-            SystemTray.ProgressIndicator.Text = "loading";
-            setProgressIndicator(true);
-            await this.profileViewModel.GetFollowing();
-            setProgressIndicator(false);
+            try
+            {
+                SystemTray.ProgressIndicator = new ProgressIndicator();
+                SystemTray.ProgressIndicator.Text = "loading";
+                setProgressIndicator(true);
+                await this.profileViewModel.GetFollowing();
+                setProgressIndicator(false);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         async private void DisplayFollowers()
         {
-            SystemTray.ProgressIndicator = new ProgressIndicator();
-            SystemTray.ProgressIndicator.Text = "loading";
-            setProgressIndicator(true);
-            await this.profileViewModel.GetFollowers();
-            setProgressIndicator(false);
+            try
+            {
+                SystemTray.ProgressIndicator = new ProgressIndicator();
+                SystemTray.ProgressIndicator.Text = "loading";
+                setProgressIndicator(true);
+                await this.profileViewModel.GetFollowers();
+                setProgressIndicator(false);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

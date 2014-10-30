@@ -86,11 +86,19 @@ namespace GitHub
 
         void loginBrowser_Loaded(object sender, RoutedEventArgs e)
         {
-            // clear cache 
-            WebBrowserExtensions.ClearInternetCacheAsync(loginBrowser);
+            try
+            {
+                // clear cache 
+                WebBrowserExtensions.ClearInternetCacheAsync(loginBrowser);
 
-            string loginUri = string.Format(LoginDefines.BASE_LOGIN_URI, LoginDefines.CLIENT_ID, LoginDefines.REDIRECT_URI, LoginDefines.STATE);
-            this.loginBrowser.Navigate(new Uri(loginUri, UriKind.Absolute));
+                string loginUri = string.Format(LoginDefines.BASE_LOGIN_URI, LoginDefines.CLIENT_ID, LoginDefines.REDIRECT_URI, LoginDefines.STATE);
+                this.loginBrowser.Navigate(new Uri(loginUri, UriKind.Absolute));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                this.NavigationService.GoBack();
+            }
         }
 
         protected override void OnBackKeyPress(CancelEventArgs e)

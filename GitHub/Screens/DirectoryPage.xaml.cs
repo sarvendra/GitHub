@@ -59,19 +59,26 @@ namespace GitHub
 
         async void DirectoryPage_Loaded(object sender, RoutedEventArgs e)
         {
-            SystemTray.ProgressIndicator = new ProgressIndicator();
-            SystemTray.ProgressIndicator.Text = "loading";
-            setProgressIndicator(true);
-            await this.directoryViewModel.GetBranchContentsAsync(branchUri);
-            setProgressIndicator(false);
-            ApplicationBarMenuItem logoutMenuItem = (ApplicationBarMenuItem)ApplicationBar.MenuItems[1];
-            if (!directoryViewModel.IsLoggedIn())
+            try
             {
-                logoutMenuItem.IsEnabled = false;
+                SystemTray.ProgressIndicator = new ProgressIndicator();
+                SystemTray.ProgressIndicator.Text = "loading";
+                setProgressIndicator(true);
+                await this.directoryViewModel.GetBranchContentsAsync(branchUri);
+                setProgressIndicator(false);
+                ApplicationBarMenuItem logoutMenuItem = (ApplicationBarMenuItem)ApplicationBar.MenuItems[1];
+                if (!directoryViewModel.IsLoggedIn())
+                {
+                    logoutMenuItem.IsEnabled = false;
+                }
+                else
+                {
+                    logoutMenuItem.IsEnabled = true;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                logoutMenuItem.IsEnabled = true;
+                MessageBox.Show(ex.Message);
             }
         }
 

@@ -39,7 +39,7 @@ namespace GitHub
             about.Click += about_Click;
             ApplicationBarMenuItem logout = new ApplicationBarMenuItem();
             logout.Text = "logout";
-            logout.IsEnabled = false;
+            logout.Click += logout_Click;
             ApplicationBar.MenuItems.Add(about);
             ApplicationBar.MenuItems.Add(logout);
         }
@@ -49,13 +49,46 @@ namespace GitHub
             NavigationService.Navigate(new Uri(PageLocator.ABOUT_PAGE, UriKind.RelativeOrAbsolute));
         }
 
+        private void logout_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // perform logout operation
+                GitHubManager manager = GitHubManager.Instance;
+                manager.Logout();
+                NavigationService.Navigate(new Uri(PageLocator.START_PAGE, UriKind.RelativeOrAbsolute));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
         async void RepoList_Loaded(object sender, RoutedEventArgs e)
         {
-            SystemTray.ProgressIndicator = new ProgressIndicator();
-            SystemTray.ProgressIndicator.Text = "loading";
-            setProgressIndicator(true);
-            await this.repoListViewModel.GetRepos(repoUrl);
-            setProgressIndicator(false);
+            try
+            {
+                SystemTray.ProgressIndicator = new ProgressIndicator();
+                SystemTray.ProgressIndicator.Text = "loading";
+                setProgressIndicator(true);
+                await this.repoListViewModel.GetRepos(repoUrl);
+                setProgressIndicator(false);
+
+                ApplicationBarMenuItem logoutMenuItem = (ApplicationBarMenuItem)ApplicationBar.MenuItems[1];
+                if (!repoListViewModel.IsLoggedIn())
+                {
+                    logoutMenuItem.IsEnabled = false;
+                }
+                else
+                {
+                    logoutMenuItem.IsEnabled = true;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void setProgressIndicator(bool isVisible)

@@ -109,7 +109,7 @@ namespace GitHub.ViewModels
             }
         }
 
-        private int watchers = 10;
+        private int watchers = 0;
 
         public int Watchers
         {
@@ -125,7 +125,7 @@ namespace GitHub.ViewModels
             }
         }
 
-        private int forks;
+        private int forks = 0;
 
         public int Forks
         {
@@ -141,7 +141,7 @@ namespace GitHub.ViewModels
             }
         }
 
-        private int issues = 15;
+        private int issues = 0;
 
         public int Issues
         {

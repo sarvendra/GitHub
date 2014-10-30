@@ -46,20 +46,28 @@ namespace GitHub
                 _isListPickerSelected = false;
                 return;
             }
-            SystemTray.ProgressIndicator = new ProgressIndicator();
-            SystemTray.ProgressIndicator.Text = "loading";
-            setProgressIndicator(true);
-            await repoViewModel.GetRepoDetails(_owner, _reponame);
-            setProgressIndicator(false);
+            try
+            {
+                SystemTray.ProgressIndicator = new ProgressIndicator();
+                SystemTray.ProgressIndicator.Text = "loading";
+                setProgressIndicator(true);
+                await repoViewModel.GetRepoDetails(_owner, _reponame);
+                setProgressIndicator(false);
 
-            ApplicationBarMenuItem logoutMenuItem = (ApplicationBarMenuItem)ApplicationBar.MenuItems[1];
-            if (!repoViewModel.IsLoggedIn())
-            {
-                logoutMenuItem.IsEnabled = false;
+                ApplicationBarMenuItem logoutMenuItem = (ApplicationBarMenuItem)ApplicationBar.MenuItems[1];
+                if (!repoViewModel.IsLoggedIn())
+                {
+                    logoutMenuItem.IsEnabled = false;
+                }
+                else
+                {
+                    logoutMenuItem.IsEnabled = true;
+                }
+
             }
-            else
+            catch (Exception ex)
             {
-                logoutMenuItem.IsEnabled = true;
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -84,10 +92,17 @@ namespace GitHub
 
         private void logout_Click(object sender, EventArgs e)
         {
-            // perform logout operation
-            GitHubManager manager = GitHubManager.Instance;
-            manager.Logout();
-            NavigationService.Navigate(new Uri(PageLocator.START_PAGE, UriKind.RelativeOrAbsolute));
+            try
+            {
+                // perform logout operation
+                GitHubManager manager = GitHubManager.Instance;
+                manager.Logout();
+                NavigationService.Navigate(new Uri(PageLocator.START_PAGE, UriKind.RelativeOrAbsolute));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -126,11 +141,18 @@ namespace GitHub
 
         async private void DisplayCollaborators()
         {
-            SystemTray.ProgressIndicator = new ProgressIndicator();
-            SystemTray.ProgressIndicator.Text = "loading";
-            setProgressIndicator(true);
-            await repoViewModel.GetCollaborators();
-            setProgressIndicator(false);
+            try
+            {
+                SystemTray.ProgressIndicator = new ProgressIndicator();
+                SystemTray.ProgressIndicator.Text = "loading";
+                setProgressIndicator(true);
+                await repoViewModel.GetCollaborators();
+                setProgressIndicator(false);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void setProgressIndicator(bool isVisible)
@@ -141,20 +163,34 @@ namespace GitHub
 
         async private void DisplayCommits()
         {
-            SystemTray.ProgressIndicator = new ProgressIndicator();
-            SystemTray.ProgressIndicator.Text = "loading";
-            setProgressIndicator(true);
-            await repoViewModel.GetCommits();
-            setProgressIndicator(false);
+            try
+            {
+                SystemTray.ProgressIndicator = new ProgressIndicator();
+                SystemTray.ProgressIndicator.Text = "loading";
+                setProgressIndicator(true);
+                await repoViewModel.GetCommits();
+                setProgressIndicator(false);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     
         private async void DisplayTree()
         {
-            SystemTray.ProgressIndicator = new ProgressIndicator();
-            SystemTray.ProgressIndicator.Text = "loading";
-            setProgressIndicator(true);
-            await this.repoViewModel.GetBranchContents();
-            setProgressIndicator(false);
+            try
+            {
+                SystemTray.ProgressIndicator = new ProgressIndicator();
+                SystemTray.ProgressIndicator.Text = "loading";
+                setProgressIndicator(true);
+                await this.repoViewModel.GetBranchContents();
+                setProgressIndicator(false);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void ownerButton_Click(object sender, EventArgs e)
