@@ -18,18 +18,5 @@ namespace GitHub.Screens
         {
             InitializeComponent();
         }
-
-        private void repoLongListSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            LongListSelector selector = sender as LongListSelector;
-            if (selector == null)
-                return;
-            Repo repo = selector.SelectedItem as Repo;
-            if (repo == null)
-                return;
-            string uri = PageLocator.REPO_PAGE+"?reponame=" + repo.name + "&ownername=" + repo.owner.login;
-            (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri(uri, UriKind.Relative));
-            selector.SelectedItem = null;
-        }
     }
 }

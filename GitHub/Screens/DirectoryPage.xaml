@@ -1,5 +1,6 @@
 ﻿<phone:PhoneApplicationPage
     x:Class="GitHub.DirectoryPage"
+    DataContext="{Binding DirectoryViewModel, RelativeSource={RelativeSource Self}}"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
@@ -37,7 +38,9 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <screens:TreeUserControl x:Name="treeUserControl"/>
+            <screens:TreeUserControl x:Name="treeUserControl"
+            DataContext="{Binding}"                         
+            />
         </Grid>
     </Grid>
 

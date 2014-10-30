@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using GitHub.Model;
 using GitHub.Utility;
+using GitHub.ViewModels;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using System.Windows.Input;
@@ -16,9 +17,34 @@ namespace GitHub
 {
     public partial class SearchPage : PhoneApplicationPage
     {
+        private SearchViewModel searchViewModel = new SearchViewModel();
+        public SearchViewModel SearchViewModel
+        {
+            get { return this.searchViewModel; }
+        }
+
         public SearchPage()
         {
             InitializeComponent();
+            BuildLocalizedApplicationBar();
+        }
+
+        private void BuildLocalizedApplicationBar()
+        {
+            ApplicationBar = new ApplicationBar();
+            ApplicationBarMenuItem about = new ApplicationBarMenuItem();
+            about.Text = "about";
+            about.Click += about_Click;
+            ApplicationBarMenuItem logout = new ApplicationBarMenuItem();
+            logout.Text = "logout";
+            logout.IsEnabled = false;
+            ApplicationBar.MenuItems.Add(about);
+            ApplicationBar.MenuItems.Add(logout);
+        }
+
+        private void about_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new Uri(PageLocator.ABOUT_PAGE, UriKind.RelativeOrAbsolute));
         }
 
         private async void RepoSearchTextBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
@@ -27,13 +53,7 @@ namespace GitHub
             {
                 // call repo search api
                 string repo = RepoSearchTextBox.Text;
-                GitHubManager manager = GitHubManager.Instance;
-                string response = await manager.Search("repositories",repo);
-                if (response != null)
-                {
-                    Repos repos = JsonConvert.DeserializeObject<Repos>(response);
-                    this.repoListUserControl.repoLongListSelector.ItemsSource = repos.Items;
-                }
+                await this.searchViewModel.GetRepos(repo);
             }
         }
 
@@ -43,30 +63,8 @@ namespace GitHub
             {
                 // call user search api
                 string user = UserSearchTextBox.Text;
-                GitHubManager manager = GitHubManager.Instance;
-                string response = await manager.Search("users", user);
-                if (response != null)
-                {
-                    Users users = JsonConvert.DeserializeObject<Users>(response);
-                    UserList.ItemsSource = users.Items;
-                }
+                await this.searchViewModel.GetUsers(user);
             }
-        }
-
-        private void UserList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            LongListSelector selector = sender as LongListSelector;
-            if (selector == null)
-                return;
-            User user = selector.SelectedItem as User; 
-            if (user == null)
-                return;
-            string uri = PageLocator.USER_PAGE+"?name=" + user.login;
-            NavigationService.Navigate(new Uri(uri, UriKind.Relative));
-
-            // clear list and text box
-            UserSearchTextBox.Text = string.Empty;
-            UserList.ItemsSource = null;
         }
     }
 }

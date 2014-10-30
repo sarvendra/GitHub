@@ -17,5 +17,6 @@ namespace GitHub.Utility
         public const string SEARCH_PAGE = "/Screens/SearchPage.xaml";
         public const string FOLLOWERSFOLLOWING_PAGE = "/Screens/FollowersFollowingPage.xaml";
         public const string REPOLIST_PAGE = "/Screens/RepoListPage.xaml";
+        public const string ABOUT_PAGE = "/Screens/About.xaml";
     }
 }

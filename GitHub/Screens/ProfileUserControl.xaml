@@ -3,25 +3,31 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:utility="clr-namespace:GitHub.Utility"
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     d:DesignHeight="480" d:DesignWidth="480">
-    
+
+    <UserControl.Resources>
+        <utility:ShowHideControlConverter x:Key="showHideControlConverter"/>
+        <utility:DateTimeToDateConverter x:Key="dateTimeToDateConverter"/>
+    </UserControl.Resources>
+
     <Grid x:Name="LayoutRoot" Background="Transparent">
                 <StackPanel>
                     <Image Name="profilePic"
                        Height="250"
                        Width="250"
                        Stretch="UniformToFill"
-                       Source="{Binding avatar_url}"/>
+                       Source="{Binding AvatarURL}"/>
                     <TextBlock Name="name"
-                           Text="{Binding name}"
+                           Text="{Binding Name}"
                            HorizontalAlignment="Center"
                            FontSize="{StaticResource JumpListAlphabetFontSize}"/>
                     <TextBlock Name="login"
-                           Text="{Binding login}"
+                           Text="{Binding Login, Mode=TwoWay}"
                            HorizontalAlignment="Center"/>
                     <Rectangle Fill="{StaticResource PhoneSubtleBrush}"
                            Height="1"
@@ -29,45 +35,50 @@
                     <StackPanel Margin="12,0,0,0">
                         <StackPanel Name="companyStackPanel" 
                         Orientation="Horizontal"
-                                    Visibility="Collapsed">
+                                    Visibility="{Binding Company, Converter={StaticResource showHideControlConverter}}">
                             <Image Source="/Assets/company.png"
                                Height="30"
                                Width="30"
                                Stretch="UniformToFill"/>
                             <TextBlock Name="company"
+                                       Text="{Binding Company, Mode=TwoWay}"
                                    Margin="10,0,0,0"
                                />
                         </StackPanel>
                         <StackPanel Name="locationStackPanel" 
                         Orientation="Horizontal"
-                                    Visibility="Collapsed">
+                                    Visibility="{Binding Location, Converter={StaticResource showHideControlConverter}}">
                             <Image Source="/Assets/location.png"
                                Height="30"
                                Width="30"
                                Stretch="UniformToFill"/>
                             <TextBlock Name="location"
+                                       Text="{Binding Location, Mode=TwoWay}"
                                    Margin="10,0,0,0"
                                />
                         </StackPanel>
                         <StackPanel Name="emailStackPanel" 
                         Orientation="Horizontal"
-                                    Visibility="Collapsed">
+                                    Visibility="{Binding Email, Converter={StaticResource showHideControlConverter}}">
                             <Image Source="/Assets/email.png"
                                Height="30"
                                Width="30"
                                Stretch="UniformToFill"/>
                             <TextBlock Name="email"
+                                       Text="{Binding Email, Mode=TwoWay}"
                                    Margin="10,0,0,0"
                                />
                         </StackPanel>
                         <StackPanel Name="dateStackPanel" 
                         Orientation="Horizontal"
-                                    Visibility="Collapsed">
+                                    Visibility="{Binding Date, Converter={StaticResource showHideControlConverter}}">
                             <Image Source="/Assets/date.png"
                                Height="30"
                                Width="30"
                                Stretch="UniformToFill"/>
                             <TextBlock Name="date"
+                            Text="{Binding Date,
+                                Converter={StaticResource dateTimeToDateConverter}}"    
                                    Margin="10,0,0,0"
                                />
                         </StackPanel>

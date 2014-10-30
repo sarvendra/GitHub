@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using GitHub.Model;
 using GitHub.Utility;
+using GitHub.ViewModels;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Newtonsoft.Json;
@@ -16,33 +17,48 @@ namespace GitHub
 {
     public partial class UserPage : PhoneApplicationPage
     {
+        private UserViewModel userViewModel = new UserViewModel();
+        public UserViewModel UserViewModel
+        {
+            get { return this.userViewModel; }
+        }
+
         private string loginName = null;
-        private User user = null;
         public UserPage()
         {
             InitializeComponent();
             Loaded += UserPage_Loaded;
+            BuildLocalizedApplicationBar();
+        }
+
+        private void BuildLocalizedApplicationBar()
+        {
+            ApplicationBar = new ApplicationBar();
+            ApplicationBarMenuItem about = new ApplicationBarMenuItem();
+            about.Text = "about";
+            about.Click += about_Click;
+            ApplicationBarMenuItem logout = new ApplicationBarMenuItem();
+            logout.Text = "logout";
+            logout.IsEnabled = false;
+            ApplicationBar.MenuItems.Add(about);
+            ApplicationBar.MenuItems.Add(logout);
+        }
+
+        private void about_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new Uri(PageLocator.ABOUT_PAGE, UriKind.RelativeOrAbsolute));
         }
 
         async void UserPage_Loaded(object sender, RoutedEventArgs e)
         {
-            GitHubManager manager = GitHubManager.Instance;
-            string response = await manager.GetUserProfile(loginName);
-            user = JsonConvert.DeserializeObject<User>(response);
-            if (user != null)
-            {
-                DataContext = user;
+            await this.userViewModel.GetUserProfile(loginName);
 
-                this.profileUserControl.SetUserInfo(user);
-
-                // followers
-                followersHyperLink.Content = user.followers.ToString() + " followers";
-                // following
-                followingHyperLink.Content = user.following.ToString() + " following";
-                // repos
-                reposHyperLink.Content = user.public_repos.ToString() + " repos";
-            }
-
+            // followers
+            followersHyperLink.Content = this.userViewModel.NoOfFollowers + " followers";
+            // following
+            followingHyperLink.Content = this.userViewModel.NoOfFollowing + " following";
+            // repos
+            reposHyperLink.Content = this.userViewModel.NoOfRepos + " repos";
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -54,20 +70,20 @@ namespace GitHub
         private void followersHyperLink_Click(object sender, RoutedEventArgs e)
         {
             string uri = PageLocator.FOLLOWERSFOLLOWING_PAGE+"?type=Followers&";
-            uri += "url=" + user.followers_url;
+            uri += "url=" + this.userViewModel.Followers_URL;
             this.NavigationService.Navigate(new Uri(uri, UriKind.Relative));
         }
 
         private void followingHyperLink_Click(object sender, RoutedEventArgs e)
         {
             string uri = PageLocator.FOLLOWERSFOLLOWING_PAGE+"?type=Following&";
-            uri += "url=" + user.following_url;
+            uri += "url=" + this.userViewModel.Following_URL;
             this.NavigationService.Navigate(new Uri(uri, UriKind.Relative));
         }
 
         private void reposHyperLink_Click(object sender, RoutedEventArgs e)
         {
-            string navigationUri = PageLocator.REPOLIST_PAGE+"?repo=" + user.repos_url;
+            string navigationUri = PageLocator.REPOLIST_PAGE+"?repo=" + this.userViewModel.Repos_URL;
             this.NavigationService.Navigate(new Uri(navigationUri, UriKind.Relative));
         }
     }

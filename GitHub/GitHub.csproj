@@ -90,6 +90,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ClientServices\HTTPClientService.cs" />
+    <Compile Include="Deserializer\JSONDeserializer.cs" />
+    <Compile Include="Interfaces\IClientService.cs" />
+    <Compile Include="Interfaces\IDeserializer.cs" />
     <Compile Include="Model\Branch.cs" />
     <Compile Include="Model\Repo.cs" />
     <Compile Include="Model\User.cs" />
@@ -160,7 +164,19 @@
     <Compile Include="Screens\UserPage.xaml.cs">
       <DependentUpon>UserPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utility\GitHubAPIPathDefines.cs" />
+    <Compile Include="Utility\LoginDefines.cs" />
+    <Compile Include="Utility\LongListSelector.cs" />
     <Compile Include="Utility\PageLocator.cs" />
+    <Compile Include="Utility\ShowHideControlConverter.cs" />
+    <Compile Include="ViewModels\DirectoryViewModel.cs" />
+    <Compile Include="ViewModels\FollowersFollowingViewModel.cs" />
+    <Compile Include="ViewModels\LoginViewModel.cs" />
+    <Compile Include="ViewModels\ProfileViewModel.cs" />
+    <Compile Include="ViewModels\RepoListViewModel.cs" />
+    <Compile Include="ViewModels\RepoViewModel.cs" />
+    <Compile Include="ViewModels\SearchViewModel.cs" />
+    <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
   </ItemGroup>
   <ItemGroup>

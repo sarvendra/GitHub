@@ -17,7 +17,27 @@ namespace GitHub
         public StartPage()
         {
             InitializeComponent();
+            BuildLocalizedApplicationBar();
         }
+
+        private void BuildLocalizedApplicationBar()
+        {
+            ApplicationBar = new ApplicationBar();
+            ApplicationBarMenuItem about = new ApplicationBarMenuItem();
+            about.Text = "about";
+            about.Click += about_Click;
+            ApplicationBarMenuItem logout = new ApplicationBarMenuItem();
+            logout.Text = "logout";
+            logout.IsEnabled = false;
+            ApplicationBar.MenuItems.Add(about);
+            ApplicationBar.MenuItems.Add(logout);
+        }
+
+        private void about_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new Uri(PageLocator.ABOUT_PAGE, UriKind.RelativeOrAbsolute));
+        }
+
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {

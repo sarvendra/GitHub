@@ -58,19 +58,6 @@ namespace GitHub
 
         }
 
-        private void about_Click(object sender, EventArgs e)
-        {
-            (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri("/About.xaml", UriKind.RelativeOrAbsolute));
-        }
-
-        private void logout_Click(object sender, EventArgs e)
-        {
-            // perform logout operation
-            GitHubManager manager = GitHubManager.Instance;
-            manager.Logout();
-            (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri(PageLocator.START_PAGE, UriKind.RelativeOrAbsolute));
-        }
-
         // Code to execute when the application is launching (eg, from Start)
         // This code will not execute when the application is reactivated
         private void Application_Launching(object sender, LaunchingEventArgs e)

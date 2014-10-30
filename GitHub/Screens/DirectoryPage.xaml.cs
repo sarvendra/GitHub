@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using GitHub.Model;
 using GitHub.Utility;
+using GitHub.ViewModels;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Newtonsoft.Json;
@@ -16,23 +17,58 @@ namespace GitHub
     public partial class DirectoryPage : PhoneApplicationPage
     {
         private string branchUri = null;
+
+        private DirectoryViewModel directoryViewModel = new DirectoryViewModel();
+        public DirectoryViewModel DirectoryViewModel
+        {
+            get { return this.directoryViewModel; }
+        }
+
         public DirectoryPage()
         {
             InitializeComponent();
             Loaded += DirectoryPage_Loaded;
+            BuildLocalizedApplicationBar();
+        }
+
+        private void BuildLocalizedApplicationBar()
+        {
+            ApplicationBar = new ApplicationBar();
+            ApplicationBarMenuItem about = new ApplicationBarMenuItem();
+            about.Text = "about";
+            about.Click += about_Click;
+            ApplicationBarMenuItem logout = new ApplicationBarMenuItem();
+            logout.Text = "logout";
+            logout.Click += logout_Click;
+            ApplicationBar.MenuItems.Add(about);
+            ApplicationBar.MenuItems.Add(logout);
+        }
+
+        private void about_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new Uri(PageLocator.ABOUT_PAGE, UriKind.RelativeOrAbsolute));
+        }
+
+        private void logout_Click(object sender, EventArgs e)
+        {
+            // perform logout operation
+            GitHubManager manager = GitHubManager.Instance;
+            manager.Logout();
+            NavigationService.Navigate(new Uri(PageLocator.START_PAGE, UriKind.RelativeOrAbsolute));
         }
 
         async void DirectoryPage_Loaded(object sender, RoutedEventArgs e)
         {
-            GitHubManager manager = GitHubManager.Instance;
-            string response = await manager.GetAsyncStringResponse(branchUri);
-            if (response == null)
-                return;
-            List<BranchContent> branches = JsonConvert.DeserializeObject<List<BranchContent>>(response);
-            if (branches == null)
-                return;
-            List<BranchContent> SortedList = branches.OrderBy(o => o.type).ToList();
-            this.treeUserControl.treeLongListSelector.ItemsSource = SortedList;
+            await this.directoryViewModel.GetBranchContentsAsync(branchUri);
+            ApplicationBarMenuItem logoutMenuItem = (ApplicationBarMenuItem)ApplicationBar.MenuItems[1];
+            if (!directoryViewModel.IsLoggedIn())
+            {
+                logoutMenuItem.IsEnabled = false;
+            }
+            else
+            {
+                logoutMenuItem.IsEnabled = true;
+            }
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

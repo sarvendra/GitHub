@@ -8,12 +8,6 @@
     <!--Application Resources-->
     <Application.Resources>
         <local:LocalizedStrings xmlns:local="clr-namespace:GitHub" x:Key="LocalizedStrings"/>
-        <shell:ApplicationBar x:Key="GlobalAppBar" IsVisible="True" IsMenuEnabled="True">
-            <shell:ApplicationBar.MenuItems>
-                <shell:ApplicationBarMenuItem Text="about" Click="about_Click" />
-                <shell:ApplicationBarMenuItem Text="logout" Click="logout_Click" />
-            </shell:ApplicationBar.MenuItems>
-        </shell:ApplicationBar>
     </Application.Resources>
 
     <Application.ApplicationLifetimeObjects>

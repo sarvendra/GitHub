@@ -18,9 +18,11 @@
         <utility:DisplayDateConverter x:Key="displayDateConverter"/>
     </UserControl.Resources>
     
-    <Grid x:Name="LayoutRoot" Background="{StaticResource PhoneChromeBrush}">
-        <phone:LongListSelector Name="commitLongListSelector">
-            <phone:LongListSelector.ItemTemplate>
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <utility:LongListSelector Name="commitLongListSelector"
+                                  ItemsSource="{Binding CommitItems, Mode=TwoWay}"
+                                  >
+            <utility:LongListSelector.ItemTemplate>
                 <DataTemplate>
                     <StackPanel 
                                 Margin="0,2,0,0">
@@ -53,8 +55,8 @@
                         </StackPanel>
                     </StackPanel>
                 </DataTemplate>
-            </phone:LongListSelector.ItemTemplate>
-        </phone:LongListSelector>
+            </utility:LongListSelector.ItemTemplate>
+        </utility:LongListSelector>
 
     </Grid>
 </UserControl>

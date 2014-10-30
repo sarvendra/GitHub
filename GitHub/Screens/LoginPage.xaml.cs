@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using GitHub.Utility;
+using GitHub.ViewModels;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using System.Net.Http;
@@ -15,22 +16,40 @@ namespace GitHub
 {
     public partial class LoginPage : PhoneApplicationPage
     {
-        private const string client_id = "92c35bdc6dd8104a4986";
-        private const string client_secret = "ad45424fb64bed02b26b70e2d55b6e47d05d395b";
-        private const string redirect_uri = "http://localhost/callback";
-        private const string accesstokenuri = "https://github.com/login/oauth/access_token";
-        private const string state = "abcd";
+        private LoginViewModel loginViewModel = new LoginViewModel();
+        public LoginViewModel LoginViewModel
+        {
+            get { return this.loginViewModel; }
+        }
 
         public LoginPage()
         {
             InitializeComponent();
             loginBrowser.Loaded += loginBrowser_Loaded;
             loginBrowser.Navigating += loginBrowser_Navigating;
+            BuildLocalizedApplicationBar();
         }
 
+        private void BuildLocalizedApplicationBar()
+        {
+            ApplicationBar = new ApplicationBar();
+            ApplicationBarMenuItem about = new ApplicationBarMenuItem();
+            about.Text = "about";
+            about.Click += about_Click;
+            ApplicationBarMenuItem logout = new ApplicationBarMenuItem();
+            logout.Text = "logout";
+            logout.IsEnabled = false;
+            ApplicationBar.MenuItems.Add(about);
+            ApplicationBar.MenuItems.Add(logout);
+        }
+
+        private void about_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new Uri(PageLocator.ABOUT_PAGE, UriKind.RelativeOrAbsolute));
+        }
         async void loginBrowser_Navigating(object sender, NavigatingEventArgs e)
         {
-            if (e.Uri.AbsoluteUri.StartsWith(redirect_uri))
+            if (e.Uri.AbsoluteUri.StartsWith(LoginDefines.REDIRECT_URI))
             {
                 try
                 {
@@ -39,25 +58,13 @@ namespace GitHub
 
                     // CHECK STATE
                     string currstate = uri.Split('?')[1].Split('&')[1].Split('=')[1];
-                    if (currstate != state)
+                    if (currstate != LoginDefines.STATE)
                     {
                         throw new System.ArgumentException("State do not match."); 
                     }
 
-                    var httpClient = new HttpClient(new HttpClientHandler());
-                    var values = new List<KeyValuePair<string, string>>
-                        {
-                            new KeyValuePair<string, string>("client_id", client_id),
-                            new KeyValuePair<string, string>("client_secret", client_secret),
-                            new KeyValuePair<string, string>("code", code)                     
-                        };
-                    HttpResponseMessage response = await httpClient.PostAsync(accesstokenuri, new FormUrlEncodedContent(values));
-                    response.EnsureSuccessStatusCode();
-                    var responseString = await response.Content.ReadAsStringAsync();
+                    await this.loginViewModel.GetAccessToken(code);
 
-                    string accessToken = responseString.Split('&')[0].Split('=')[1];
-                    GitHubManager manager = GitHubManager.Instance;
-                    manager.Login(accessToken);
                     this.NavigationService.Navigate(new Uri(PageLocator.PROFILE_PAGE, UriKind.Relative));
 
                 }
@@ -74,9 +81,7 @@ namespace GitHub
             // clear cache 
             WebBrowserExtensions.ClearInternetCacheAsync(loginBrowser);
 
-            string baseloginUri = "https://github.com/login/oauth/authorize?client_id={0}&scope=user,public_repo&redirect_uri={1}" +
-                "&state={2}";
-            string loginUri = string.Format(baseloginUri, client_id, redirect_uri, state);
+            string loginUri = string.Format(LoginDefines.BASE_LOGIN_URI, LoginDefines.CLIENT_ID, LoginDefines.REDIRECT_URI, LoginDefines.STATE);
             this.loginBrowser.Navigate(new Uri(loginUri, UriKind.Absolute));
         }
 

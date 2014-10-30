@@ -18,17 +18,5 @@ namespace GitHub.Screens
         {
             InitializeComponent();
         }
-
-        private void UserLongListSelector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            LongListSelector selector = sender as LongListSelector;
-            if (selector == null)
-                return;
-            User selectedUser = selector.SelectedItem as User;
-            if (selectedUser == null)
-                return;
-            string uri = PageLocator.USER_PAGE + "?name=" + selectedUser.login;
-            (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri(uri, UriKind.Relative));
-        }
     }
 }

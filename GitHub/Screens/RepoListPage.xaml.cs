@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using GitHub.Model;
 using GitHub.Utility;
+using GitHub.ViewModels;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Newtonsoft.Json;
@@ -15,24 +16,42 @@ namespace GitHub
 {
     public partial class RepoList : PhoneApplicationPage
     {
+        private RepoListViewModel repoListViewModel = new RepoListViewModel();
+        public RepoListViewModel RepoListViewModel
+        {
+            get { return this.repoListViewModel; }
+        }
+
         private string repoUrl = null;
 
         public RepoList()
         {
             InitializeComponent();
             Loaded += RepoList_Loaded;
+            BuildLocalizedApplicationBar();
+        }
+
+        private void BuildLocalizedApplicationBar()
+        {
+            ApplicationBar = new ApplicationBar();
+            ApplicationBarMenuItem about = new ApplicationBarMenuItem();
+            about.Text = "about";
+            about.Click += about_Click;
+            ApplicationBarMenuItem logout = new ApplicationBarMenuItem();
+            logout.Text = "logout";
+            logout.IsEnabled = false;
+            ApplicationBar.MenuItems.Add(about);
+            ApplicationBar.MenuItems.Add(logout);
+        }
+
+        private void about_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new Uri(PageLocator.ABOUT_PAGE, UriKind.RelativeOrAbsolute));
         }
 
         async void RepoList_Loaded(object sender, RoutedEventArgs e)
         {
-            GitHubManager manager = GitHubManager.Instance;
-            string response = await manager.getStringAsync(repoUrl);
-            if (response == null)
-                return;
-            List<Repo> repoList = JsonConvert.DeserializeObject<List<Repo>>(response);
-            if (repoList == null)
-                return;
-            this.repoListUserControl.repoLongListSelector.ItemsSource = repoList;
+            await this.repoListViewModel.GetRepos(repoUrl);
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

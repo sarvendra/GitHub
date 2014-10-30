@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using GitHub.Model;
 using GitHub.Utility;
+using GitHub.ViewModels;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using System.ComponentModel;
@@ -16,25 +17,49 @@ namespace GitHub
 {
     public partial class ProfilePage : PhoneApplicationPage
     {
-        private User user = null;
+        private ProfileViewModel profileViewModel = new ProfileViewModel();
+        public ProfileViewModel ProfileViewModel
+        {
+            get { return this.profileViewModel; }
+        }
+
         public ProfilePage()
         {
             InitializeComponent();
             Loaded += ProfilePage_Loaded;
+
+            BuildLocalizedApplicationBar();
+        }
+
+        private void BuildLocalizedApplicationBar()
+        {
+            ApplicationBar = new ApplicationBar();
+            ApplicationBarMenuItem about = new ApplicationBarMenuItem();
+            about.Text = "about";
+            about.Click += about_Click;
+            ApplicationBarMenuItem logout = new ApplicationBarMenuItem();
+            logout.Text = "logout";
+            logout.Click += logout_Click;
+            ApplicationBar.MenuItems.Add(about);
+            ApplicationBar.MenuItems.Add(logout);
+        }
+
+        private void about_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new Uri(PageLocator.ABOUT_PAGE, UriKind.RelativeOrAbsolute));
+        }
+
+        private void logout_Click(object sender, EventArgs e)
+        {
+            // perform logout operation
+            GitHubManager manager = GitHubManager.Instance;
+            manager.Logout();
+            NavigationService.Navigate(new Uri(PageLocator.START_PAGE, UriKind.RelativeOrAbsolute));
         }
 
         async void ProfilePage_Loaded(object sender, RoutedEventArgs e)
         {
-            GitHubManager manager = GitHubManager.Instance;
-            string response = await manager.GetAuthenticatedUserProfile();
-            if (response == null)
-                return;
-            user = JsonConvert.DeserializeObject<User>(response);
-            if (user == null)
-                return;
-            DataContext = user;
-
-            this.profileUserControl.SetUserInfo(user);
+            await this.profileViewModel.GetAuthenticatedUserProfile();
         }
 
         protected override void OnBackKeyPress(CancelEventArgs e)
@@ -70,53 +95,17 @@ namespace GitHub
 
         async private void DisplayRepos()
         {
-            GitHubManager manager = GitHubManager.Instance;
-            string response =  await manager.GetAuthenticatedUserRepos();
-            if (response == null)
-                return;
-            List<Repo> repoList = JsonConvert.DeserializeObject<List<Repo>>(response);
-            if (repoList == null)
-                return;
-            // show it in the list
-            this.repoListUserControl.repoLongListSelector.ItemsSource = repoList;
+            await this.profileViewModel.GetRepos();
         }
 
         async private void DisplayFollowing()
         {
-            GitHubManager manager = GitHubManager.Instance;
-            string response = await manager.GetAuthenticatedUserFollowing();
-            if (response == null)
-                return;
-            List<User> followingList = JsonConvert.DeserializeObject<List<User>>(response);
-            if (followingList == null)
-                return;
-            // show it in the list
-            this.followersGridUserControl.userLongListSelector.ItemsSource = followingList;
+            await this.profileViewModel.GetFollowing();
         }
 
         async private void DisplayFollowers()
         {
-            GitHubManager manager = GitHubManager.Instance;
-            string response = await manager.GetAuthenticatedUserFollowers();
-            if (response == null)
-                return;
-            List<User> followersList = JsonConvert.DeserializeObject<List<User>>(response);
-            if (followersList == null)
-                return;
-            // show it in the list
-            this.followersGridUserControl.userLongListSelector.ItemsSource = followersList;
-        }
-
-        private void repoLongListSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            LongListSelector selector = sender as LongListSelector;
-            if (selector == null)
-                return;
-            Repo repo = selector.SelectedItem as Repo;
-            if (repo == null)
-                return;
-            string uri = PageLocator.REPO_PAGE+"?reponame=" + repo.name + "&ownername=" + repo.owner.login;
-            NavigationService.Navigate(new Uri(uri, UriKind.Relative));
+            await this.profileViewModel.GetFollowers();
         }
     }
 }

@@ -8,7 +8,9 @@
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
-    d:DesignHeight="480" d:DesignWidth="480">
+    d:DesignHeight="480" d:DesignWidth="480"
+    xmlns:utility="clr-namespace:GitHub.Utility"         
+    >
     
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <StackPanel>
@@ -24,7 +26,7 @@
                 <TextBlock Name="watchersTextBlock"
                                    HorizontalAlignment="Right"
                                    FontSize="{StaticResource JumpListAlphabetFontSize}"
-                                   Text="{Binding watchers}"
+                                   Text="{Binding Watchers, Mode=TwoWay}"
                                    Margin="0,0,10,0"
                                    />
             </Grid>
@@ -37,7 +39,7 @@
                 <TextBlock Name="forksTextBlock"
                                    HorizontalAlignment="Right"
                                    FontSize="{StaticResource JumpListAlphabetFontSize}"
-                                   Text="{Binding forks}"
+                                   Text="{Binding Forks, Mode=TwoWay}"
                                    Margin="0,0,10,0"
                                    />
             </Grid>
@@ -50,7 +52,7 @@
                 <TextBlock Name="issuesTextBlock"
                                    HorizontalAlignment="Right"
                                    FontSize="{StaticResource JumpListAlphabetFontSize}"
-                                   Text="{Binding open_issues}"
+                                   Text="{Binding Issues, Mode=TwoWay}"
                                    Margin="0,0,10,0"
                                    />
             </Grid>
@@ -66,37 +68,25 @@
                                 BorderBrush="{StaticResource PhoneBackgroundBrush}">
                     <StackPanel Orientation="Horizontal">
                         <Image Name="OwnerImage"
-                                       Stretch="UniformToFill"
+                            Stretch="UniformToFill"
+                            Width="50"
+                            Height="50"
+                            Source="{Binding AvatarURL}"
                                        />
                         <TextBlock Name="OwnerTextBlock"
                                            VerticalAlignment="Center"
+                                   Text="{Binding Login, Mode=TwoWay}"
                                            />
                     </StackPanel>
                 </Button>
             </Grid>
             <TextBlock Text="Branches"/>
-            <toolkit:ListPicker x:Name="branchListPicker" 
-                                        SelectionChanged="branchListPicker_OnSelectionChanged" 
-                                        MouseEnter="branchListPicker_MouseEnter"
-                                        >
-                <toolkit:ListPicker.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding name}"/>
-                    </DataTemplate>
-                </toolkit:ListPicker.ItemTemplate>
-                <toolkit:ListPicker.FullModeItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding name}"/>
-                    </DataTemplate>
-                </toolkit:ListPicker.FullModeItemTemplate>
+            <toolkit:ListPicker x:Name="branchListPicker"
+                                ItemsSource="{Binding BranchItems, Mode=TwoWay}"
+                                SelectedItem="{Binding SelectedBranch, Mode=TwoWay}"      
+                                MouseEnter="BranchListPicker_OnMouseEnter"
+                                >
             </toolkit:ListPicker>
-            <TextBlock Text="Download"
-                               FontSize="{StaticResource JumpListAlphabetFontSize}"
-                               />
-            <Button Name="downloadButton"
-                            Content="Get a Zip"
-                            Click="downloadButton_Click"
-                            />
         </StackPanel>
     </Grid>
 </UserControl>

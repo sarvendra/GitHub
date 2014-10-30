@@ -8,21 +8,25 @@
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
-    d:DesignHeight="480" d:DesignWidth="480">
+    d:DesignHeight="480" d:DesignWidth="480"
+    xmlns:utility="clr-namespace:GitHub.Utility"         
+    >
     
     <Grid x:Name="LayoutRoot" Background="Transparent">
-        <phone:LongListSelector
+        <utility:LongListSelector
                     Name="userLongListSelector"
                     LayoutMode="Grid"
                     GridCellSize="100,100"
-                    SelectionChanged="UserLongListSelector_OnSelectionChanged">
-            <phone:LongListSelector.ItemTemplate>
+                    ItemsSource="{Binding UserItems, Mode=TwoWay}"
+                    SelectedItem="{Binding SelectedUser, Mode=TwoWay}"
+                    >
+            <utility:LongListSelector.ItemTemplate>
                 <DataTemplate>
                     <Image 
                                 Source="{Binding avatar_url}"
                                 Margin="0,0,5,5"/>
                 </DataTemplate>
-            </phone:LongListSelector.ItemTemplate>
-        </phone:LongListSelector>
+            </utility:LongListSelector.ItemTemplate>
+        </utility:LongListSelector>
     </Grid>
 </UserControl>
