@@ -2,7 +2,7 @@
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2012/deployment" AppPlatformVersion="8.0">
   <DefaultLanguage xmlns="" code="en-US" />
   <App xmlns="" ProductID="{2a04a0b9-92c8-49dc-8784-9898728af913}" Title="GitHub" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="GitHub author" Description="Sample description" Publisher="GitHub" PublisherID="{5f699ad1-eb1a-48d3-a2a3-c6eba84c2d9a}">
-    <IconPath IsRelative="true" IsResource="false">Assets\ApplicationIcon.png</IconPath>
+    <IconPath IsRelative="true" IsResource="false">ApplicationIcon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_NETWORKING" />
       <Capability Name="ID_CAP_MEDIALIB_AUDIO" />
