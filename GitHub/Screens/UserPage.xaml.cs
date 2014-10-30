@@ -70,7 +70,7 @@ namespace GitHub
             try
             {
                 SystemTray.ProgressIndicator = new ProgressIndicator();
-                SystemTray.ProgressIndicator.Text = "loading";
+                SystemTray.ProgressIndicator.Text = "loading...";
                 setProgressIndicator(true);
                 await this.userViewModel.GetUserProfile(loginName);
                 setProgressIndicator(false);

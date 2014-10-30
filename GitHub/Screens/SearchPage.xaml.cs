@@ -54,7 +54,7 @@ namespace GitHub
                 try
                 {
                     SystemTray.ProgressIndicator = new ProgressIndicator();
-                    SystemTray.ProgressIndicator.Text = "loading";
+                    SystemTray.ProgressIndicator.Text = "loading...";
                     setProgressIndicator(true);
 
                     // call repo search api
@@ -82,7 +82,7 @@ namespace GitHub
                 try
                 {
                     SystemTray.ProgressIndicator = new ProgressIndicator();
-                    SystemTray.ProgressIndicator.Text = "loading";
+                    SystemTray.ProgressIndicator.Text = "loading...";
                     setProgressIndicator(true);
                     // call user search api
                     string user = UserSearchTextBox.Text;

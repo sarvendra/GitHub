@@ -69,7 +69,7 @@ namespace GitHub
             try
             {
                 SystemTray.ProgressIndicator = new ProgressIndicator();
-                SystemTray.ProgressIndicator.Text = "loading";
+                SystemTray.ProgressIndicator.Text = "loading...";
                 setProgressIndicator(true);
                 await this.profileViewModel.GetAuthenticatedUserProfile();
                 setProgressIndicator(false);
@@ -122,7 +122,7 @@ namespace GitHub
             try
             {
                 SystemTray.ProgressIndicator = new ProgressIndicator();
-                SystemTray.ProgressIndicator.Text = "loading";
+                SystemTray.ProgressIndicator.Text = "loading...";
                 setProgressIndicator(true);
                 await this.profileViewModel.GetRepos();
                 setProgressIndicator(false);
@@ -138,7 +138,7 @@ namespace GitHub
             try
             {
                 SystemTray.ProgressIndicator = new ProgressIndicator();
-                SystemTray.ProgressIndicator.Text = "loading";
+                SystemTray.ProgressIndicator.Text = "loading...";
                 setProgressIndicator(true);
                 await this.profileViewModel.GetFollowing();
                 setProgressIndicator(false);
@@ -154,7 +154,7 @@ namespace GitHub
             try
             {
                 SystemTray.ProgressIndicator = new ProgressIndicator();
-                SystemTray.ProgressIndicator.Text = "loading";
+                SystemTray.ProgressIndicator.Text = "loading...";
                 setProgressIndicator(true);
                 await this.profileViewModel.GetFollowers();
                 setProgressIndicator(false);

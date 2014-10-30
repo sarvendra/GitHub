@@ -62,7 +62,7 @@ namespace GitHub
             try
             {
                 SystemTray.ProgressIndicator = new ProgressIndicator();
-                SystemTray.ProgressIndicator.Text = "loading";
+                SystemTray.ProgressIndicator.Text = "loading...";
                 setProgressIndicator(true);
                 await this.directoryViewModel.GetBranchContentsAsync(branchUri);
                 setProgressIndicator(false);

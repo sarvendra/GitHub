@@ -49,7 +49,7 @@ namespace GitHub
             try
             {
                 SystemTray.ProgressIndicator = new ProgressIndicator();
-                SystemTray.ProgressIndicator.Text = "loading";
+                SystemTray.ProgressIndicator.Text = "loading...";
                 setProgressIndicator(true);
                 await repoViewModel.GetRepoDetails(_owner, _reponame);
                 setProgressIndicator(false);
@@ -144,7 +144,7 @@ namespace GitHub
             try
             {
                 SystemTray.ProgressIndicator = new ProgressIndicator();
-                SystemTray.ProgressIndicator.Text = "loading";
+                SystemTray.ProgressIndicator.Text = "loading...";
                 setProgressIndicator(true);
                 await repoViewModel.GetCollaborators();
                 setProgressIndicator(false);
@@ -166,7 +166,7 @@ namespace GitHub
             try
             {
                 SystemTray.ProgressIndicator = new ProgressIndicator();
-                SystemTray.ProgressIndicator.Text = "loading";
+                SystemTray.ProgressIndicator.Text = "loading...";
                 setProgressIndicator(true);
                 await repoViewModel.GetCommits();
                 setProgressIndicator(false);
@@ -182,7 +182,7 @@ namespace GitHub
             try
             {
                 SystemTray.ProgressIndicator = new ProgressIndicator();
-                SystemTray.ProgressIndicator.Text = "loading";
+                SystemTray.ProgressIndicator.Text = "loading...";
                 setProgressIndicator(true);
                 await this.repoViewModel.GetBranchContents();
                 setProgressIndicator(false);
